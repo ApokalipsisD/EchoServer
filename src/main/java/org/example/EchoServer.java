@@ -73,7 +73,7 @@ public class EchoServer {
                 serverSocket.close();
             }
         } catch (IOException e) {
-            log.warn("Error closing server socket", e);
+            log.error("Error closing server socket", e);
         }
 
         executor.shutdown();
