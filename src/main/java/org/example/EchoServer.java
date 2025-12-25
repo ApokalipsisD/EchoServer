@@ -40,22 +40,26 @@ public class EchoServer {
             log.info("EchoServer started on port {}", port);
 
             while (running) {
-                try {
-                    Socket client = server.accept();
-                    log.info("Client connected: {}", client.getRemoteSocketAddress());
-                    executor.submit(new ClientHandler(client));
-                } catch (IOException e) {
-                    if (running) {
-                        log.error("Error accepting client connection", e);
-                    } else {
-                        log.info("Server stopped accepting connections.");
-                    }
-                }
+                handleClientAccept(server);
             }
 
         } catch (IOException e) {
             if (running) {
                 log.error("Failed to start server socket", e);
+            }
+        }
+    }
+
+    private void handleClientAccept(ServerSocket server) {
+        try {
+            Socket client = server.accept();
+            log.info("Client connected: {}", client.getRemoteSocketAddress());
+            executor.submit(new ClientHandler(client));
+        } catch (IOException e) {
+            if (running) {
+                log.error("Error accepting client connection", e);
+            } else {
+                log.info("Server stopped accepting connections.");
             }
         }
     }

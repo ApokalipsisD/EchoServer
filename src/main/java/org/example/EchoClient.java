@@ -31,7 +31,8 @@ public class EchoClient {
                 }
 
                 out.println(msg);
-                System.out.println("Echo: " + in.readLine());
+                String response = in.readLine();
+                log.info("Echo: {}", response);
             }
 
         } catch (IOException e) {
